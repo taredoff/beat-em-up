@@ -1,0 +1,42 @@
+[gd_scene load_steps=4 format=3 uid="uid://cxmupvm8cyfnq"]
+
+[ext_resource type="PackedScene" uid="uid://cfb1bwsjytqbo" path="res://Player/player.tscn" id="1_761fk"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cmysm"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_b6gt0"]
+
+[node name="Game" type="Node"]
+
+[node name="Floor" type="StaticBody2D" parent="."]
+position = Vector2(570, 578)
+scale = Vector2(61.6494, 8.61414)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
+shape = SubResource("RectangleShape2D_cmysm")
+debug_color = Color(0.0836877, 0.562263, 0.866557, 0.42)
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="Floor"]
+scale = Vector2(20.0612, 20.1077)
+mesh = SubResource("QuadMesh_b6gt0")
+
+[node name="Wall 1" type="StaticBody2D" parent="."]
+position = Vector2(1230, 83.0001)
+scale = Vector2(7.44328, 40.8633)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall 1"]
+shape = SubResource("RectangleShape2D_cmysm")
+
+[node name="Wall 2" type="StaticBody2D" parent="."]
+position = Vector2(-68.9999, 84.0001)
+scale = Vector2(6.90104, -41.0387)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall 2"]
+shape = SubResource("RectangleShape2D_cmysm")
+
+[node name="Player" parent="." instance=ExtResource("1_761fk")]
+position = Vector2(571, 381)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(574, 272)
+scale = Vector2(2.94726, 0.696189)
