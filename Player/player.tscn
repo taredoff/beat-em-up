@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://c2yk871v5fj21"]
+[gd_scene load_steps=6 format=3 uid="uid://c2yk871v5fj21"]
 
 [ext_resource type="Script" path="res://Player/player.gd" id="1_tsqrn"]
 
@@ -8,8 +8,16 @@ height = 153.98
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_fn6hr"]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_l081h"]
+radius = 40.0125
+
+[sub_resource type="SphereMesh" id="SphereMesh_om32c"]
+
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_tsqrn")
+
+[node name="AttackTimer" type="Timer" parent="."]
+wait_time = 0.5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_cw0lh")
@@ -18,4 +26,15 @@ shape = SubResource("CapsuleShape2D_cw0lh")
 scale = Vector2(-79.7921, 77.8492)
 mesh = SubResource("CapsuleMesh_fn6hr")
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="AttackArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
+shape = SubResource("CircleShape2D_l081h")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="AttackArea"]
+modulate = Color(0.448724, 0.580111, 0.881306, 1)
+scale = Vector2(80.5396, 80.1326)
+mesh = SubResource("SphereMesh_om32c")
+
+[connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
+[connection signal="body_entered" from="AttackArea" to="." method="_on_attack_area_body_entered"]
