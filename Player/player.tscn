@@ -1,40 +1,41 @@
-[gd_scene load_steps=6 format=3 uid="uid://c2yk871v5fj21"]
+[gd_scene load_steps=6 format=3 uid="uid://c8dnufewi7ua7"]
 
-[ext_resource type="Script" path="res://Player/player.gd" id="1_tsqrn"]
+[ext_resource type="Script" path="res://Player/player.gd" id="1_b3y08"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cw0lh"]
-radius = 40.0
-height = 153.98
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_xnans"]
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_fn6hr"]
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_lmw1s"]
+height = 36.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_l081h"]
-radius = 40.0125
+[sub_resource type="SphereMesh" id="SphereMesh_g8uc6"]
 
-[sub_resource type="SphereMesh" id="SphereMesh_om32c"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_74h4c"]
 
 [node name="Player" type="CharacterBody2D"]
-script = ExtResource("1_tsqrn")
+scale = Vector2(7.3, -7)
+script = ExtResource("1_b3y08")
 
 [node name="AttackTimer" type="Timer" parent="."]
-wait_time = 0.5
+one_shot = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CapsuleShape2D_cw0lh")
+[node name="AttackCooldown" type="Timer" parent="."]
+one_shot = true
 
-[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
-scale = Vector2(-79.7921, 77.8492)
-mesh = SubResource("CapsuleMesh_fn6hr")
+[node name="Mesh" type="MeshInstance2D" parent="."]
+scale = Vector2(19.749, 17.8166)
+mesh = SubResource("CapsuleMesh_xnans")
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_lmw1s")
 
 [node name="AttackArea" type="Area2D" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
-shape = SubResource("CircleShape2D_l081h")
-
 [node name="MeshInstance2D" type="MeshInstance2D" parent="AttackArea"]
-modulate = Color(0.448724, 0.580111, 0.881306, 1)
-scale = Vector2(80.5396, 80.1326)
-mesh = SubResource("SphereMesh_om32c")
+scale = Vector2(19.586, 20.4299)
+mesh = SubResource("SphereMesh_g8uc6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
+shape = SubResource("CircleShape2D_74h4c")
 
 [connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
-[connection signal="body_entered" from="AttackArea" to="." method="_on_attack_area_body_entered"]
+[connection signal="timeout" from="AttackCooldown" to="." method="_on_attack_cooldown_timeout"]
